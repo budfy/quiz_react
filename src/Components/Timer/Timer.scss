@@ -1,0 +1,70 @@
+@import '../../sass/vars';
+
+// timer
+.c-timer {
+  display: flex;
+  align-items: center;
+  padding-left: 60px;
+  width: fit-content;
+  background: linear-gradient(0deg, #5CBE4D, #5CBE4D);
+  border-radius: 0 64px 64px 0;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.12);
+
+  @media screen and (min-width: 1200px) {
+    position: absolute;
+    left: 0;
+  }
+
+  @media screen and (max-width: 1199px) {
+    margin-top: 15px;
+    margin-left: calc(50% - 50vw);
+  }
+
+  @media screen and (max-width: 767px) {
+    padding-left: 30px;
+  }
+
+  &__title {
+    display: block;
+    max-width: 228px;
+    width: 100%;
+    font-size: 16px;
+    font-weight: normal;
+    color: $white-color;
+  }
+
+  &__block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 15px;
+    min-width: 100px;
+    width: 100px;
+    height: 100px;
+    background: $white-color;
+    border-radius: 50%;
+
+    @media screen and (max-width: 767px) {
+      min-width: 60px;
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  &__value {
+    display: block;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 1;
+    text-align: center;
+    background: linear-gradient(0deg, #5CBE4D, #5CBE4D);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+
+    @media screen and (max-width: 767px) {
+      font-size: 20px;
+    }
+  }
+}

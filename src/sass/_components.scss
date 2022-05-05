@@ -1,0 +1,68 @@
+// stages
+.c-stages {
+  display: flex;
+  align-items: center;
+
+  &__item {
+    font-size: 24px;
+    font-weight: normal;
+    color: $gray-color;
+
+    &--current {
+      color: $accent-color;
+    }
+
+    @media screen and (max-width: 767px) {
+      font-size: 18px;
+    }
+  }
+
+  &__item+&__item {
+    &::before {
+      content: '/';
+    }
+  }
+}
+
+// price
+.c-price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__title {
+    font-size: 32px;
+    font-weight: normal;
+    color: $primary-color;
+  }
+
+  &__group {
+    margin-left: 10px;
+    text-align: center;
+  }
+
+  &__old-price {
+    display: block;
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 1;
+    text-decoration: line-through;
+    color: $primary-color;
+  }
+
+  &__old-price+&__new-price {
+    margin-top: 5px;
+  }
+
+  &__new-price {
+    display: block;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 1;
+    background: linear-gradient(116.15deg, #AFE11E 0%, #4DB856 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+  }
+}

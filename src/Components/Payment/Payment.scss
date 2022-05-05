@@ -1,0 +1,42 @@
+// payment
+.c-payment {
+  &__subtitle {
+    display: block;
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: normal;
+    text-align: center;
+
+    @media screen and (max-width: 767px) {
+      font-weight: 500;
+      text-align: left;
+    }
+  }
+
+  &__list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__item+&__item {
+    margin-left: 30px;
+
+    @media screen and (min-width: 768px) and (max-width: 1023px) {
+      margin-left: 15px;
+    }
+  }
+
+  &__img {
+    display: block;
+    overflow: hidden;
+    max-width: 92px;
+    width: 100%;
+
+    @media screen and (max-width: 767px) {
+      img {
+        height: 25px;
+      }
+    }
+  }
+}
