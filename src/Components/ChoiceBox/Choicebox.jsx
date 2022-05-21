@@ -3,7 +3,6 @@ import './Choicebox.scss'
 
 function Choicebox(props) {
 
-
   const step = (e) => {
     e.target.checked = true;
     let data = props.userData;
@@ -15,7 +14,7 @@ function Choicebox(props) {
 
   return (
     <label htmlFor={props.id} className={"poll-checkbox poll__checkbox"}>
-      <input type="radio" id={props.id} name={props.name} className="poll-checkbox__input" onClick={step} checked={false} />
+      <input type="radio" id={props.id} name={props.name} className="poll-checkbox__input" onClick={step} defaultChecked={false} />
       <span className="poll-checkbox__icon">
         <img src={props.pic} alt={props.picAlt} />
       </span>

@@ -130,9 +130,8 @@ function App(props) {
         body: JSON.stringify(data)
       });
       let res = await response;
-      console.log(res.headers.get("content-type"));
-      let answer = res.json();
-      if (res.ok && answer) {
+      if (res.ok && option === !!false) {
+        let answer = res.json();
         return answer;
       }
       else if (res.ok) {

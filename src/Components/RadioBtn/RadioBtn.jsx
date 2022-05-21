@@ -18,7 +18,7 @@ function RadioBtn(props) {
         name={props.name}
         className="btn-checkbox__input"
         onClick={step}
-        checked={false}
+        defaultChecked={false}
       />
       <span className="btn-checkbox__label">{props.children}</span>
     </label>

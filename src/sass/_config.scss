@@ -228,7 +228,7 @@ svg {
   &__input {
     display: none;
 
-    &:checked,
+    // &:checked,
     &:hover {
       &~.poll-checkbox__icon {
         background: $white-color;
@@ -302,7 +302,7 @@ svg {
   &__input {
     display: none;
 
-    &:checked,
+    // &:checked,
     &:hover {
       &~.btn-checkbox__label {
         color: $white-color;

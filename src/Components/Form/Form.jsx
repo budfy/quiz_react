@@ -11,6 +11,35 @@ function Form(props) {
   function submit(e) {
     e.preventDefault();
     setUserEmail();
+    payment();
+  }
+
+  function payment() {
+    console.count("payment");
+    const widget = new window.cp.CloudPayments();
+    let options = {
+      publicId: 'test_api_00000000000000000000001',
+      description: 'За стройность',
+      amount: props.userData.price,
+      accountId: props.userData.email, //идентификатор плательщика (необязательно)
+      invoiceId: props.userData.id, //номер заказа  (необязательно)
+      email: props.userData.email, //email плательщика (необязательно)
+      skin: "mini", //дизайн виджета (необязательно)
+    };
+    const callbacks = {
+      onSuccess: options => {
+        console.log("Options: ", options)
+      },
+      onFail: (reason, options) => {
+        console.log("Reason: ", reason)
+        console.log("Options: ", options)
+      },
+      onSuccess: (paymentResult, options) => {
+        console.log("Payment result: ", paymentResult)
+        console.log("Options: ", options)
+      }
+    }
+    widget.pay('auth', options, callbacks)
   }
 
   function setUserEmail() {
@@ -29,7 +58,7 @@ function Form(props) {
         <span className="circle-checkbox__icon"></span>
         <span className="circle-checkbox__label">Нажимая кнопку "Оплатить" Вы даете согласие на обработку персональных данных, а также подтверждаете ознакомление с публичной офертойи тарифами</span>
         <picture>
-          <source media="(min-width: )" srcset="" />
+          <source media="(min-width: )" srcSet="" />
           <img src="" alt="" />
         </picture>
       </label>

@@ -418,7 +418,7 @@ function Poll(props) {
           <span className="weight-grid__value">{props.userData.data.weight} кг</span>
           <span className="weight-grid__title">Желаемый <br />вес</span>
           <picture className="weight-grid__line">
-            <source media="(max-width: 639px)" srcset={lineMob} />
+            <source media="(max-width: 639px)" srcSet={lineMob} />
             <img src={line} alt="Line" />
           </picture>
         </div>
