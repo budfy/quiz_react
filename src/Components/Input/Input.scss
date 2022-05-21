@@ -1,0 +1,25 @@
+.input {
+  &-wrapper {
+    display: block;
+    position: relative;
+  }
+
+  &__error {
+    position: absolute;
+    max-width: 100%;
+    background-color: #fff;
+    color: #EA2121;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    text-align: center;
+    border: 1px solid #EA2121;
+    bottom: calc(100% + 0.5rem);
+    z-index: 1;
+    transition: all 0.5s;
+
+    &:hover {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+}

@@ -1,6 +1,14 @@
 @import '../../sass/vars';
 
 .footer {
+  transition: all 0.25s;
+  bottom: 0;
+  width: 100%;
+
+  &.footer--open {
+    backdrop-filter: blur(20px);
+  }
+
   &__wrap {
     position: relative;
     padding: 15px 0 20px;
@@ -23,7 +31,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    margin: 0 auto 10px;
+    margin: 0 auto;
     padding: 0;
     font-size: 18px;
     font-weight: normal;
@@ -35,22 +43,6 @@
 
     &:focus {
       outline: none;
-    }
-
-    &::before {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translate(-50%, 100%);
-      display: block;
-      margin-top: 2px;
-      width: 30px;
-      height: 10px;
-      background-image: url(../../img/dist/sprite.svg#icon-dropdown);
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center center;
     }
 
     &::after {
@@ -82,17 +74,20 @@
   }
 
   &__wrapper {
-    display: none;
+    display: flex;
     justify-content: space-between;
-    padding: 15px 0 20px;
-
-    &--active {
-      display: flex;
-    }
+    height: auto;
+    overflow: hidden;
+    transition: all 0.5s;
+    will-change: height, padding;
 
     @media screen and (max-width: 767px) {
       flex-direction: column;
     }
+  }
+
+  &__block {
+    padding: 20px 0 15px;
   }
 
   &__block+&__block {

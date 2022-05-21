@@ -23,7 +23,7 @@ function Timer(props) {
       seconds -= 1;
       setMin(minutes < 10 ? `0${minutes}` : minutes);
       setSec(seconds < 10 ? `0${seconds}` : seconds);
-    }, 20);
+    }, 1000);
   }
 
   countDown();

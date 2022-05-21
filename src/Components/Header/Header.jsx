@@ -1,5 +1,7 @@
 import React from "react";
-import './Header.scss'
+import { Link } from "react-router-dom";
+import './Header.scss';
+import logo from "../../img/dist/logotype.svg"
 
 function Header(props) {
   let descr = () => {
@@ -10,12 +12,21 @@ function Header(props) {
     }
   };
 
+  function clear() {
+    if (props.step === 9) {
+      return " header--clear";
+    }
+    else {
+      return "";
+    }
+  }
+
   return (
-    <header className="header">
+    <header className={"header" + clear()}>
       <div className="container">
-        <button className="logotype">
-          <img src="../../img/dist/logotype.svg" alt="Logotype" />
-        </button>
+        <Link to="/" className="logotype">
+          <img src={logo} alt="Logotype" />
+        </Link>
         {descr()}
       </div>
     </header>

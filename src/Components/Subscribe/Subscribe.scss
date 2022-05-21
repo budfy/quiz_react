@@ -1,0 +1,31 @@
+@import "../../sass/_vars";
+
+.c-info {
+  display: flex;
+  align-items: flex-start;
+
+  &__icon {
+    display: block;
+    min-width: 20px;
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
+
+  &__icon+&__text {
+    margin-left: 18px;
+  }
+
+  &__text {
+    display: block;
+    font-size: 12px;
+    font-weight: normal;
+    color: $primary-color;
+  }
+}
+
+.c-info+.c-info {
+  margin-top: 20px;
+}

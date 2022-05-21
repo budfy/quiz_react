@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import './Poll.scss';
 
 import Choicebox from "../ChoiceBox/Choicebox";
@@ -8,8 +8,47 @@ import Progress from "../Progress/Progress";
 import Timer from './../Timer/Timer';
 import Payment from './../Payment/Payment';
 import Form from './../Form/Form';
+import Resume from "../Resume/Resume";
+
+import arrowBack from "../../img/dist/sprite.svg";
+import female from "../../img/dist/female.svg";
+import man from "../../img/dist/man.svg";
+import meat from "../../img/dist/meat.svg";
+import vegan from "../../img/dist/vegan.svg"
+import milk from "../../img/dist/milk.svg"
+import noMilk from "../../img/dist/no-milk.svg"
+import lineMob from "../../img/dist/road-line-mobile.svg"
+import line from "../../img/dist/road-line.svg"
 
 function Poll(props) {
+
+  const [price, setPrice] = useState(0);
+  const [oldPrice, setOldPrice] = useState(0);
+  const [planName, setPlanName] = useState('');
+
+  function getPrices() {
+    props.sendData("payment", {
+      age: props.userData.data.age,
+      sex: props.userData.sex,
+      weight: props.userData.data.weight
+    }).then(
+      answer => {
+        setPrice(answer.price)
+        setOldPrice(answer.old_price)
+        setPlanName(answer.name)
+        let data = props.userData;
+        data.id = answer.id;
+        data.price = answer.price;
+        props.setUserData(data);
+      }
+    )
+  }
+
+  useEffect(() => {
+    if (props.step == 11) {
+      getPrices()
+    }
+  }, [props.step])
 
   function stepsCounter() {
     if (props.step > 1 && props.step < 8) {
@@ -27,7 +66,7 @@ function Poll(props) {
   function checkCompleteStep(e) {
     let newStep = props.step;
     for (const key in props.userData.data) {
-      if (props.userData.data[key]) {
+      if (!props.userData.data[key]) {
         return false;
       }
     }
@@ -39,17 +78,17 @@ function Poll(props) {
       let choiceArr = [{
         id: "poll-sex-01",
         name: "poll-sex",
-        pic: "../../img/dist/female.svg",
+        pic: female,
         picAlt: "Woman",
         label: "Женский",
-        userDataItem: { name: "sex", data: "woman" }
+        userDataItem: { name: "sex", data: "female" }
       }, {
         id: "poll-sex-02",
         name: "poll-sex",
-        pic: "../../img/dist/man.svg",
+        pic: man,
         picAlt: "man",
         label: "Мужской",
-        userDataItem: { name: "sex", data: "man" }
+        userDataItem: { name: "sex", data: "male" }
       }];
       return (<div className="poll__inner">
         {choiceArr.map((choice, index) => {
@@ -73,14 +112,14 @@ function Poll(props) {
       let choiceArr = [{
         id: "poll-meat-01",
         name: "poll-meat",
-        pic: "../../img/dist/meat.svg",
+        pic: meat,
         picAlt: "Meat",
         label: "Я ем мясо",
         userDataItem: { name: "meat", data: true }
       }, {
         id: "poll-meat-02",
         name: "poll-meat",
-        pic: "../../img/dist/vegan.svg",
+        pic: vegan,
         picAlt: "Vegan",
         label: "Я вегетарианец",
         userDataItem: { name: "meat", data: false }
@@ -107,14 +146,14 @@ function Poll(props) {
       let choiceArr = [{
         id: "poll-milk-01",
         name: "poll-milk",
-        pic: "../../img/dist/milk.svg",
+        pic: milk,
         picAlt: "Milk",
         label: "Употребляю",
         userDataItem: { name: "milk", data: true }
       }, {
         id: "poll-milk-02",
         name: "poll-milk",
-        pic: "../../img/dist/no-milk.svg",
+        pic: noMilk,
         picAlt: "No milk",
         label: "Не употребляю",
         userDataItem: { name: "milk", data: false }
@@ -239,16 +278,24 @@ function Poll(props) {
       let inputsArr = [
         {
           placeholder: "Возраст",
-          userDataItem: "age"
+          userDataItem: "age",
+          min: 10,
+          max: 99
         }, {
           placeholder: "Рост",
-          userDataItem: "height"
+          userDataItem: "height",
+          min: 110,
+          max: 210
         }, {
           placeholder: "Вес",
-          userDataItem: "weight"
+          userDataItem: "weight",
+          min: 20,
+          max: 250
         }, {
           placeholder: "Желаемый вес",
-          userDataItem: "wishedWeight"
+          userDataItem: "wishedWeight",
+          min: 20,
+          max: 250
         }
       ];
 
@@ -260,7 +307,10 @@ function Poll(props) {
             step={props.step}
             userData={props.userData}
             setStep={props.setStep}
-            setUserData={props.setUserData}>
+            setUserData={props.setUserData}
+            min={inp.min}
+            max={inp.max}
+          >
           </Input>
         })}
         <button className="poll-form__btn btn btn--green" onClick={checkCompleteStep}>Дальше</button>
@@ -338,59 +388,82 @@ function Poll(props) {
           userDataItem: { name: "time", data: "60-120" }
         }
       ];
-      return (<div className="poll__inner"><div className="poll__group">
-        {choiceArr.map((choice, index) => {
-          return <RadioBtn
-            key={index}
-            id={choice.id}
-            name={choice.name}
-            userDataItem={choice.userDataItem}
-            step={props.step}
-            userData={props.userData}
-            setStep={props.setStep}
-            setUserData={props.setUserData}>{choice.label}</RadioBtn>
-        })}
-      </div></div>
+      return (<div className="poll__inner">
+        <div className="poll__group">
+          {choiceArr.map((choice, index) => {
+            return <RadioBtn
+              key={index}
+              id={choice.id}
+              name={choice.name}
+              userDataItem={choice.userDataItem}
+              step={props.step}
+              userData={props.userData}
+              setStep={props.setStep}
+              setUserData={props.setUserData}>{choice.label}</RadioBtn>
+          })}
+        </div>
+      </div>
       )
     }
 
     if (props.step === 9) {
       return (<>
+        <div className="weight-grid">
+          <div className="weight-grid__inner"></div>
+          <div className="weight-grid__inner"></div>
+          <div className="weight-grid__inner"></div>
+          <div className="weight-grid__inner"></div>
+          <div className="weight-grid__inner"></div>
+          <div className="weight-grid__inner"></div>
+          <span className="weight-grid__value">{props.userData.data.weight} кг</span>
+          <span className="weight-grid__title">Желаемый <br />вес</span>
+          <picture className="weight-grid__line">
+            <source media="(max-width: 639px)" srcset={lineMob} />
+            <img src={line} alt="Line" />
+          </picture>
+        </div>
+        <h2 className="poll__title">{props.title}</h2>
         <p className="poll__description">Хорошо питайтесь, развлекайтесь, <br />выглядите потрясающе</p>
-        <Progress step={props.step} setStep={props.setStep} />
+        <Progress step={props.step} setStep={props.setStep} userData={props.userData} setUserData={props.setUserData} sendData={props.sendData} />
       </>
       )
     }
 
     if (props.step === 10) {
       return (
+        <Resume step={props.step} setStep={props.setStep} userData={props.userData} />
+      )
+    }
+
+    if (props.step === 11) {
+      return (
         <>
-          <p className="poll__title">Название Плана</p>
+          <p className="poll__title">"{planName}"</p>
           <Timer />
           <div className="c-price poll__price">
             <span className="c-price__title">стоимость:</span>
             <div className="c-price__group">
-              <span className="c-price__old-price">435₴</span>
-              <span className="c-price__new-price">25₴</span>
+              <span className="c-price__old-price">{oldPrice}</span>
+              <span className="c-price__new-price">{price}</span>
             </div>
           </div>
-          <Form />
-          <Payment subclass="poll__payment" />
+          <Form userData={props.userData} setUserData={props.setUserData} sendData={props.sendData} />
+          <Payment subclassName="poll__payment" />
         </>
       )
     }
-    if (props.step === 11) {
+    if (props.step === 12) {
       return (
         <div className="page">
           <div className="page__wrapper">
             <picture className="page__img">
-              <img src="../../img/dist/icon-success.svg" alt="Success" />
+              <img src="img/dist/icon-success.svg" alt="Success" />
             </picture>
             <h2 className="page__title">Ваш план готов! </h2>
             <p className="page__description">
               Проверьте указанный вами почтовый адрес
             </p>
-            <a href="#" className="page__link">Проверить почту</a>
+            <a href="mailto:" className="page__link">Проверить почту</a>
           </div>
         </div>
       )
@@ -406,7 +479,7 @@ function Poll(props) {
     if (props.step > 1 && props.step < 9) {
       return (<button className="poll__back back-btn" onClick={stepBack}>
         <svg className="back-btn__icon">
-          <use xlinkHref="../../img/dist/sprite.svg#icon-arrow-back"></use>
+          <use xlinkHref={arrowBack + "#icon-arrow-back"}></use>
         </svg>
         <span>назад</span>
       </button>);
@@ -415,11 +488,10 @@ function Poll(props) {
     }
   }
 
-  return (
-    <div className="poll">
+  if (props.step !== 9) {
+    return (<div className={"poll fade" + props.anim}>
       <div className="container">
         <div className="poll__wrapper">
-
           <div className="poll__top">
             <h3 className="poll__subtitle">{props.subtitle}</h3>
             {stepsCounter()}
@@ -430,6 +502,23 @@ function Poll(props) {
         </div>
       </div>
     </div>
-  )
+    )
+  } else {
+    return (
+      <div className={"poll fade" + props.anim}>
+        <div className="container">
+          <div className="poll__wrapper">
+            <div className="poll__top">
+              <h3 className="poll__subtitle">{props.subtitle}</h3>
+              {stepsCounter()}
+            </div>
+            {generateStep()}
+            {showBackBtn()}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
 }
 export default Poll;

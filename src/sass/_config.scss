@@ -2,6 +2,34 @@
 
 @import 'vars';
 
+::-webkit-scrollbar {
+  width: 0;
+}
+
+::-webkit-scrollbar-button {
+  width: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 0;
+}
+
+::-webkit-scrollbar-track {
+  width: 0;
+}
+
+::-webkit-scrollbar-track-piece {
+  width: 0;
+}
+
+::-webkit-scrollbar-corner {
+  width: 0;
+}
+
+::root {
+  scrollbar-width: none;
+}
+
 // common document styles - tags
 body {
   position: relative;
@@ -157,6 +185,10 @@ svg {
     font-weight: 500;
     background: linear-gradient(116.15deg, #AFE11E 0%, #4DB856 100%);
     border-radius: 55px;
+
+    @media screen and (max-width: 767px) {
+      font-size: 24px;
+    }
   }
 }
 
@@ -168,9 +200,11 @@ svg {
   font-weight: normal;
   opacity: 0.55;
   color: $primary-color;
+  transition: opacity 0.25s, color 0.25s;
 
   &:hover {
     opacity: 1;
+    color: $accent-color;
 
     svg {
       color: $accent-color;
@@ -225,7 +259,7 @@ svg {
     height: 300px;
     border: 1px solid $accent-color;
     border-radius: 50%;
-    transition: all 0.15s linear;
+    transition: all 0.2s linear;
 
     img {
       display: block;
@@ -254,7 +288,7 @@ svg {
     opacity: 0.55;
     color: $primary-color;
     user-select: none;
-    transition: all 0.15s linear;
+    transition: all 0.2s linear;
   }
 }
 
@@ -365,7 +399,6 @@ svg {
   background: $white-color;
   border: 1px solid #AFE11E;
   border-radius: 24px;
-  user-select: none;
   transition: all 0.15s linear;
 
   &::placeholder {
@@ -378,8 +411,9 @@ svg {
 
   @media screen and (max-width: 767px) {
     padding: 14px 6px;
-    font-size: 12px;
+    font-size: 16px;
     font-weight: 500;
+
   }
 }
 
@@ -393,51 +427,5 @@ svg {
 
   &__inner {
     overflow: hidden;
-  }
-}
-
-.page-img {
-  position: absolute;
-  left: -171px;
-  bottom: 17px;
-  z-index: -1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 711px;
-  width: 711px;
-  height: 711px;
-  border: 30px solid rgba(#E1F6E2, 0.65);
-  border-radius: 50%;
-
-  img {
-    display: block;
-    width: 324px;
-    height: 324px;
-    opacity: 0.52;
-    object-fit: contain;
-  }
-
-  @media screen and (max-width: 1023px) {
-    top: 50%;
-    left: 50%;
-    bottom: auto;
-    transform: translate(-50%, -50%);
-
-    img {
-      opacity: 0.32;
-    }
-  }
-
-  @media screen and (max-width: 767px) {
-    display: none;
-    min-width: 500px;
-    width: 500px;
-    height: 500px;
-
-    img {
-      width: 228px;
-      height: 228px;
-    }
   }
 }
