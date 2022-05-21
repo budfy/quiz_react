@@ -19,12 +19,43 @@ import milk from "../../img/dist/milk.svg"
 import noMilk from "../../img/dist/no-milk.svg"
 import lineMob from "../../img/dist/road-line-mobile.svg"
 import line from "../../img/dist/road-line.svg"
+import success from "../../img/dist/icon-success.svg"
 
 function Poll(props) {
 
   const [price, setPrice] = useState(0);
   const [oldPrice, setOldPrice] = useState(0);
   const [planName, setPlanName] = useState('');
+  const [emailLink, setEmailLink] = useState('https://gmail.com')
+
+  const mailservices = {
+    "mail.ru": "https://e.mail.ru/",
+    "bk.ru": "https://e.mail.ru/",
+    "list.ru": "https://e.mail.ru/",
+    "inbox.ru": "https://e.mail.ru/",
+    "yandex.ru": "https://mail.yandex.ru/",
+    "ya.ru": "https://mail.yandex.ru/",
+    "yandex.ua": "https://mail.yandex.ua/",
+    "yandex.by": "https://mail.yandex.by/",
+    "yandex.kz": "https://mail.yandex.kz/",
+    "yandex.com": "https://mail.yandex.com/",
+    "gmail.com": "https://mail.google.com/",
+    "googlemail.com": "https://mail.google.com/",
+    "outlook.com": "https://mail.live.com/",
+    "hotmail.com": "https://mail.live.com/",
+    "live.ru": "https://mail.live.com/",
+    "live.com": "https://mail.live.com/",
+    "me.com": "https://www.icloud.com/",
+    "icloud.com": "https://www.icloud.com/",
+    "rambler.ru": "https://mail.rambler.ru/",
+    "yahoo.com": "https://mail.yahoo.com/",
+    "ukr.net": "https://mail.ukr.net/",
+    "i.ua": "http://mail.i.ua/",
+    "bigmir.net": "http://mail.bigmir.net/",
+    "tut.by": "https://mail.tut.by/",
+    "inbox.lv": "https://www.inbox.lv/",
+    "mail.kz": "http://mail.kz/"
+  }
 
   function getPrices() {
     props.sendData("payment", {
@@ -39,6 +70,8 @@ function Poll(props) {
         let data = props.userData;
         data.id = answer.id;
         data.price = answer.price;
+        data.name = answer.name;
+        data.subDescr = answer.sub_description ? answer.sub_description : answer.name;
         props.setUserData(data);
       }
     )
@@ -62,6 +95,16 @@ function Poll(props) {
       return null;
     }
   };
+  useEffect(() => {
+    if (props.userData.email) {
+      let email = props.userData.email.split("@")[1];
+      if (typeof mailservices[email] !== undefined) {
+        console.log(mailservices.hasOwnProperty.call(email));
+        setEmailLink(mailservices[email])
+      }
+    }
+  }, [props.userData.email])
+
 
   function checkCompleteStep(e) {
     let newStep = props.step;
@@ -447,7 +490,7 @@ function Poll(props) {
               <span className="c-price__new-price">{price}</span>
             </div>
           </div>
-          <Form userData={props.userData} setUserData={props.setUserData} sendData={props.sendData} />
+          <Form userData={props.userData} setUserData={props.setUserData} sendData={props.sendData} step={props.step} setStep={props.setStep} />
           <Payment subclassName="poll__payment" />
         </>
       )
@@ -457,13 +500,13 @@ function Poll(props) {
         <div className="page">
           <div className="page__wrapper">
             <picture className="page__img">
-              <img src="img/dist/icon-success.svg" alt="Success" />
+              <img src={success} alt="Success" />
             </picture>
             <h2 className="page__title">Ваш план готов! </h2>
             <p className="page__description">
               Проверьте указанный вами почтовый адрес
             </p>
-            <a href="mailto:" className="page__link">Проверить почту</a>
+            <a href={emailLink} className="page__link">Проверить почту</a>
           </div>
         </div>
       )

@@ -15,10 +15,9 @@ function Form(props) {
   }
 
   function payment() {
-    console.count("payment");
-    const widget = new window.cp.CloudPayments();
+    let cp = window.cp;
     let options = {
-      publicId: 'test_api_00000000000000000000001',
+      publicId: 'pk_a60581fd2eaa8838a56351191174',
       description: 'За стройность',
       amount: props.userData.price,
       accountId: props.userData.email, //идентификатор плательщика (необязательно)
@@ -26,20 +25,73 @@ function Form(props) {
       email: props.userData.email, //email плательщика (необязательно)
       skin: "mini", //дизайн виджета (необязательно)
     };
-    const callbacks = {
-      onSuccess: options => {
-        console.log("Options: ", options)
+
+    var widget = new cp.CloudPayments();
+    var receipt = {
+      Items: [//товарные позиции
+        {
+          label: props.userData.name, //наименование товара
+          price: props.userData.price, //цена
+          quantity: 1.00, //количество
+          amount: props.userData.price, //сумма
+          vat: 20, //ставка НДС
+          method: 0, // тег-1214 признак способа расчета - признак способа расчета
+          object: 0, // тег-1212 признак предмета расчета - признак предмета товара, работы, услуги, платежа, выплаты, иного предмета расчета
+        }
+      ],
+      taxationSystem: 0, //система налогообложения; необязательный, если у вас одна система налогообложения
+      email: props.userData.email, //e-mail покупателя, если нужно отправить письмо с чеком
+      phone: '', //телефон покупателя в любом формате, если нужно отправить сообщение со ссылкой на чек
+      isBso: false, //чек является бланком строгой отчетности
+      amounts:
+      {
+        electronic: props.userData.price, // Сумма оплаты электронными деньгами
+        advancePayment: 0.00, // Сумма из предоплаты (зачетом аванса) (2 знака после запятой)
+        credit: 0.00, // Сумма постоплатой(в кредит) (2 знака после запятой)
+        provision: 0.00 // Сумма оплаты встречным предоставлением (сертификаты, др. мат.ценности) (2 знака после запятой)
+      }
+    };
+
+    var data = {};
+    data.CloudPayments = {
+      CustomerReceipt: receipt, //чек для первого платежа
+      recurrent: {
+        interval: 'Month',
+        period: 1,
+        customerReceipt: receipt //чек для регулярных платежей
+      }
+    }; //создание ежемесячной подписки
+
+    widget.charge({ // options
+      // publicId: 'test_api_00000000000000000000001',
+      publicId: 'pk_a60581fd2eaa8838a563551191174', //id из личного кабинета
+      description: props.userData.subDescr, //назначение
+      amount: props.userData.price, //сумма
+      currency: 'RUB', //валюта
+      invoiceId: props.userData.id, //номер заказа  (необязательно)
+      accountId: props.userData.email, //идентификатор плательщика (обязательно для создания подписки)
+      skin: "modern",
+      data: data
+    },
+      function (options) {
+        props.sendData("payment", {
+          status: "paid"
+        },
+          "set-status");
+        setTimeout(() => {
+          nextStep()
+        }, 1500);
       },
-      onFail: (reason, options) => {
+      function (reason, options) {
+        console.warn("Fail!");
         console.log("Reason: ", reason)
         console.log("Options: ", options)
-      },
-      onSuccess: (paymentResult, options) => {
-        console.log("Payment result: ", paymentResult)
-        console.log("Options: ", options)
-      }
-    }
-    widget.pay('auth', options, callbacks)
+      });
+  }
+
+  function nextStep() {
+    let step = props.step;
+    props.setStep(step + 1)
   }
 
   function setUserEmail() {
