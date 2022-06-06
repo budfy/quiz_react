@@ -100,7 +100,6 @@ function Poll(props) {
     if (props.userData.email) {
       let email = props.userData.email.split("@")[1];
       if (typeof mailservices[email] !== "undefined") {
-        console.log(mailservices.hasOwnProperty.call(email));
         setEmailLink(mailservices[email])
       }
     }

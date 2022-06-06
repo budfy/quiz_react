@@ -50,7 +50,6 @@ export default function Subscribe() {
           break;
         case 400 || 500:
           let answer = response;
-          console.log(answer);
           setStatus({ code: response.status, message: answer.message });
           break;
         default:

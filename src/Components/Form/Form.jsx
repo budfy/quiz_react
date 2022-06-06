@@ -11,9 +11,9 @@ function Form(props) {
     "poll-form-autopay": false
   });
   const [email, setEmail] = useState("");
-  const [paymentData, setPaymentData] = useState({});
+  const [paymentData, setPaymentData] = useState();
   const [btnStatus, setBtnStatus] = useState(false);
-  let cloudPay;
+  // let cloudPay;
 
   async function setUserEmail() {
     let userData = props.userData;
@@ -24,70 +24,67 @@ function Form(props) {
   }
 
   async function getPaymentData() {
-    console.log("GPD");
-    return fetch(`${config.SERVER.url}/payment/${props.userData.id}/pay`, {
-      method: "GET",
-      headers: config.REQUEST_HEADERS
-    })
-      .then(response => {
-        if (response.ok) {
-          let answer = response.json()
-          return answer;
+    if (!paymentData) {
+
+      return fetch(`${config.SERVER.url}/payment/${props.userData.id}/pay`, {
+        method: "GET",
+        headers: config.REQUEST_HEADERS
+      })
+        .then(response => {
+          if (response.ok) {
+            let answer = response.json()
+            return answer;
+          }
         }
-      }
-      )
+        )
+        .then(
+          answer => {
+            setPaymentData(answer.cloudpayments)
+          }
+        )
+        .catch(err => {
+          console.warn("Error in sendData:");
+          console.error(err);
+          return null;
+        }
+        )
+    } else {
+      return true
+    }
+  }
+
+
+
+  function submit(e) {
+    e.preventDefault();
+    setUserEmail()
       .then(
-        answer => {
-          console.log("GPD answer: ", answer);
-          console.log(paymentData);
-          setPaymentData(answer.cloudpayments)
-          cloudPay = answer.cloudpayments;
-          console.log(cloudPay);
-        }
-      )
-      .catch(err => {
-        console.warn("Error in sendData:");
-        console.error(err);
-        return null;
-      }
+        () => getPaymentData()
       )
   }
-
-  function payment() {
-    console.log("P");
-    let cp = window.cp;
-
-    var widget = new cp.CloudPayments();
-
-    widget.charge(cloudPay,
-      function (options) {
-        setTimeout(() => {
-          nextStep()
-        }, 500);
-      },
-      function (reason, options) {
-        console.warn("Fail!");
-        console.log("Reason: ", reason)
-        console.log("Options: ", options)
-      });
-  }
-
   function nextStep() {
     let step = props.step;
     props.setStep(step + 1)
   }
 
-  function submit(e) {
-    e.preventDefault();
-    setUserEmail()
-      .then(() => {
-        getPaymentData()
-          .then(
-            payment
-          )
-      }
-      )
-  }
+  useEffect(() => {
+    if (paymentData) {
+      let cp = window.cp;
+      var widget = new cp.CloudPayments();
+
+      widget.charge(paymentData,
+        function (options) {
+          setTimeout(() => {
+            nextStep()
+          }, 500);
+        },
+        function (reason, options) {
+          console.warn("Fail!");
+          console.log("Reason: ", reason)
+          console.log("Options: ", options)
+        });
+    }
+  }, [paymentData])
 
   function checkboxesValidation(e) {
     let obj = Object.seal(formCheckbox);
