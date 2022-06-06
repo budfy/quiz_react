@@ -10,7 +10,9 @@ function Progress(props) {
     props.sendData('profile', {
       age: props.userData.data.age,
       sex: props.userData.sex,
-      weight: props.userData.data.weight
+      weight: props.userData.data.weight,
+      wantWeight: props.userData.data.wishedWeight,
+      growth: props.userData.data.height
     })
       .then(
         answer => {
@@ -26,14 +28,11 @@ function Progress(props) {
   }
 
   useEffect(() => {
-    if (pr == 1) {
-      profile()
+    if (pr === 1) {
+      profile();
     }
     if (pr === 50) {
       setLoaderClass(" loading");
-    }
-    if (pr >= 100) {
-
     }
   }, [pr])
 
@@ -47,7 +46,7 @@ function Progress(props) {
       if (i < 100) {
         setPr(i += 1);
       }
-      if (i == 50) {
+      if (i === 50) {
         setLoaderClass(" loading");
       }
       if (i >= 100) {

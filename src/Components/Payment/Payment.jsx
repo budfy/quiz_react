@@ -1,9 +1,9 @@
 import React from "react";
 import './Payment.scss';
-import visa from "../../img/dist/visa.png"
-import master from "../../img/dist/mastercard.png"
-import apple from "../../img/dist/apple-pay.png"
-import gpay from "../../img/dist/google-pay.png"
+import visa from "../../img/visa.png"
+import master from "../../img/mastercard.png"
+import apple from "../../img/apple-pay.png"
+import gpay from "../../img/google-pay.png"
 
 
 function Payment(props) {

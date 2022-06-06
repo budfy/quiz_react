@@ -1,26 +1,25 @@
 import { useState, useEffect } from 'react';
-
 import {
   Routes,
-  Route,
-  NavLink,
-  Navigate
+  Route
 } from "react-router-dom";
 
-import './App.scss';
-import Header from './Components/Header/Header';
-import Poll from './Components/Poll/Poll';
-import Footer from './Components/Footer/Footer';
+import config from "./config/config.json";
 
-import bg1 from './img/dist/page-chicken.svg';
-import bg2 from './img/dist/page-milk.svg';
-import bg3 from './img/dist/page-sport.svg';
-import bg4 from './img/dist/page-calendar.svg';
-import bg5 from './img/dist/page-data.svg';
-import bg6 from './img/dist/page-budget.svg';
-import bg7 from './img/dist/page-time.svg';
-import bg8 from "./img/dist/page-sex.svg"
-import Subscribe from './Components/Subscribe/Subscribe';
+import './App.scss';
+import Header from './components/Header/Header';
+import Poll from './components/Poll/Poll';
+import Footer from './components/Footer/Footer';
+
+import bg1 from './img/page-chicken.svg';
+import bg2 from './img/page-milk.svg';
+import bg3 from './img/page-sport.svg';
+import bg4 from './img/page-calendar.svg';
+import bg5 from './img/page-data.svg';
+import bg6 from './img/page-budget.svg';
+import bg7 from './img/page-time.svg';
+import bg8 from "./img/page-sex.svg"
+import Subscribe from './pages/subscribe/Subscribe';
 
 function App(props) {
   const [bg, setBg] = useState(null);
@@ -79,7 +78,7 @@ function App(props) {
       {
         bg: bg6,
         subTitle: "Бюджет",
-        title: "Ваш месячный бюджет на рацион"
+        title: "Ваш месячный бюджет на рацион (₽)"
       },
       {
         bg: bg7,
@@ -98,8 +97,8 @@ function App(props) {
       },
       {
         bg: null,
-        subTitle: "Ваш персональный план готов!",
-        title: "Индивидуальный план питания"
+        subTitle: null,
+        title: "Ваш персональный план питания готов!"
       },
       {
         bg: null,
@@ -121,12 +120,9 @@ function App(props) {
     let parameters = type;
     if (option && userData.id) parameters += `/${userData.id}/${option}`;
     try {
-      const response = await fetch(`http://144.76.116.190:5587/${parameters}`, {
+      const response = await fetch(`${config.SERVER.url}/${parameters}`, {
         method: "POST",
-        headers: {
-          'accept': "application/json",
-          'Content-Type': 'application/json'
-        },
+        headers: config.REQUEST_HEADERS,
         body: JSON.stringify(data)
       });
       let res = await response;

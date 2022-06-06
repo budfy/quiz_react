@@ -1,0 +1,54 @@
+.c-paymentrules {
+  position: absolute;
+  right: 0;
+  top: 20%;
+  max-width: 400px;
+  display: flex;
+  align-items: center;
+  padding: 30px 30px 30px 45px;
+  width: -moz-fit-content;
+  width: fit-content;
+  background: linear-gradient(0deg, #5CBE4D, #5CBE4D);
+  border-radius: 64px 0 0 64px;
+  box-shadow: 4px 4px 12px rgb(0 0 0 / 12%);
+
+  @media screen and (max-width: 1449px) {
+    max-width: 300px;
+    top: 10%;
+  }
+
+  @media screen and (max-width: 1249px) {
+    position: static;
+    margin: 30px auto;
+    max-width: 600px;
+    width: 100%;
+    padding: 30px 45px;
+    border-radius: 64px;
+  }
+
+  &__list {
+    color: #ffffff;
+    list-style: disc;
+  }
+
+  &__item {
+    list-style-type: disc;
+    padding-left: 1em;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      height: 4px;
+      width: 4px;
+      top: 0.75em;
+      left: 0;
+      background-color: #fff;
+      border-radius: 50%;
+    }
+
+    &+& {
+      margin-top: 1em;
+    }
+  }
+}

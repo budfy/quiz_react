@@ -9,17 +9,18 @@ import Timer from './../Timer/Timer';
 import Payment from './../Payment/Payment';
 import Form from './../Form/Form';
 import Resume from "../Resume/Resume";
+import PaymentRules from "../Rules/Rules";
 
-import arrowBack from "../../img/dist/sprite.svg";
-import female from "../../img/dist/female.svg";
-import man from "../../img/dist/man.svg";
-import meat from "../../img/dist/meat.svg";
-import vegan from "../../img/dist/vegan.svg"
-import milk from "../../img/dist/milk.svg"
-import noMilk from "../../img/dist/no-milk.svg"
-import lineMob from "../../img/dist/road-line-mobile.svg"
-import line from "../../img/dist/road-line.svg"
-import success from "../../img/dist/icon-success.svg"
+import arrowBack from "../../img/sprite.svg";
+import female from "../../img/female.svg";
+import man from "../../img/man.svg";
+import meat from "../../img/meat.svg";
+import vegan from "../../img/vegan.svg"
+import milk from "../../img/milk.svg"
+import noMilk from "../../img/no-milk.svg"
+import lineMob from "../../img/road-line-mobile.svg"
+import line from "../../img/road-line.svg"
+import success from "../../img/icon-success.svg"
 
 function Poll(props) {
 
@@ -28,57 +29,29 @@ function Poll(props) {
   const [planName, setPlanName] = useState('');
   const [emailLink, setEmailLink] = useState('https://gmail.com')
 
-  const mailservices = {
-    "mail.ru": "https://e.mail.ru/",
-    "bk.ru": "https://e.mail.ru/",
-    "list.ru": "https://e.mail.ru/",
-    "inbox.ru": "https://e.mail.ru/",
-    "yandex.ru": "https://mail.yandex.ru/",
-    "ya.ru": "https://mail.yandex.ru/",
-    "yandex.ua": "https://mail.yandex.ua/",
-    "yandex.by": "https://mail.yandex.by/",
-    "yandex.kz": "https://mail.yandex.kz/",
-    "yandex.com": "https://mail.yandex.com/",
-    "gmail.com": "https://mail.google.com/",
-    "googlemail.com": "https://mail.google.com/",
-    "outlook.com": "https://mail.live.com/",
-    "hotmail.com": "https://mail.live.com/",
-    "live.ru": "https://mail.live.com/",
-    "live.com": "https://mail.live.com/",
-    "me.com": "https://www.icloud.com/",
-    "icloud.com": "https://www.icloud.com/",
-    "rambler.ru": "https://mail.rambler.ru/",
-    "yahoo.com": "https://mail.yahoo.com/",
-    "ukr.net": "https://mail.ukr.net/",
-    "i.ua": "http://mail.i.ua/",
-    "bigmir.net": "http://mail.bigmir.net/",
-    "tut.by": "https://mail.tut.by/",
-    "inbox.lv": "https://www.inbox.lv/",
-    "mail.kz": "http://mail.kz/"
-  }
 
   function getPrices() {
     props.sendData("payment", {
       age: props.userData.data.age,
       sex: props.userData.sex,
-      weight: props.userData.data.weight
+      weight: props.userData.data.weight,
+      wantWeight: props.userData.data.wishedWeight
     }).then(
       answer => {
         setPrice(answer.price)
-        setOldPrice(answer.old_price)
+        setOldPrice(answer.oldPrice)
         setPlanName(answer.name)
         let data = props.userData;
         data.id = answer.id;
         data.price = answer.price;
         data.name = answer.name;
-        data.subDescr = answer.sub_description ? answer.sub_description : answer.name;
+        data.subDescr = answer.subDescription ? answer.subDescription : answer.name;
         props.setUserData(data);
       }
     )
   }
-
   useEffect(() => {
-    if (props.step == 11) {
+    if (parseInt(props.step) === 11) {
       getPrices()
     }
   }, [props.step])
@@ -96,9 +69,37 @@ function Poll(props) {
     }
   };
   useEffect(() => {
+    const mailservices = {
+      "mail.ru": "https://e.mail.ru/",
+      "bk.ru": "https://e.mail.ru/",
+      "list.ru": "https://e.mail.ru/",
+      "inbox.ru": "https://e.mail.ru/",
+      "yandex.ru": "https://mail.yandex.ru/",
+      "ya.ru": "https://mail.yandex.ru/",
+      "yandex.ua": "https://mail.yandex.ua/",
+      "yandex.by": "https://mail.yandex.by/",
+      "yandex.kz": "https://mail.yandex.kz/",
+      "yandex.com": "https://mail.yandex.com/",
+      "gmail.com": "https://mail.google.com/",
+      "googlemail.com": "https://mail.google.com/",
+      "outlook.com": "https://mail.live.com/",
+      "hotmail.com": "https://mail.live.com/",
+      "live.ru": "https://mail.live.com/",
+      "live.com": "https://mail.live.com/",
+      "me.com": "https://www.icloud.com/",
+      "icloud.com": "https://www.icloud.com/",
+      "rambler.ru": "https://mail.rambler.ru/",
+      "yahoo.com": "https://mail.yahoo.com/",
+      "ukr.net": "https://mail.ukr.net/",
+      "i.ua": "http://mail.i.ua/",
+      "bigmir.net": "http://mail.bigmir.net/",
+      "tut.by": "https://mail.tut.by/",
+      "inbox.lv": "https://www.inbox.lv/",
+      "mail.kz": "http://mail.kz/"
+    }
     if (props.userData.email) {
       let email = props.userData.email.split("@")[1];
-      if (typeof mailservices[email] !== undefined) {
+      if (typeof mailservices[email] !== "undefined") {
         console.log(mailservices.hasOwnProperty.call(email));
         setEmailLink(mailservices[email])
       }
@@ -481,20 +482,22 @@ function Poll(props) {
     if (props.step === 11) {
       return (
         <>
-          <p className="poll__title">"{planName}"</p>
+          {/*<p className="poll__title">"{planName}"</p>*/}
           <Timer />
           <div className="c-price poll__price">
             <span className="c-price__title">стоимость:</span>
             <div className="c-price__group">
-              <span className="c-price__old-price">{oldPrice}</span>
-              <span className="c-price__new-price">{price}</span>
+              <span className="c-price__old-price">{oldPrice}₽</span>
+              <span className="c-price__new-price">{price}₽</span>
             </div>
           </div>
-          <Form userData={props.userData} setUserData={props.setUserData} sendData={props.sendData} step={props.step} setStep={props.setStep} />
-          <Payment subclassName="poll__payment" />
+          <Form userData={props.userData} setUserData={props.setUserData} sendData={props.sendData} step={props.step} setStep={props.setStep} price={price} oldPrice={oldPrice} />
+          {/*<PaymentRules />*/}
+          <Payment subclass="poll__payment" />
         </>
       )
     }
+
     if (props.step === 12) {
       return (
         <div className="page">
@@ -506,7 +509,7 @@ function Poll(props) {
             <p className="page__description">
               Проверьте указанный вами почтовый адрес
             </p>
-            <a href={emailLink} className="page__link">Проверить почту</a>
+            <a href={emailLink} className="page__link" target="_blank" rel="nofollow noreferrer">Проверить почту</a>
           </div>
         </div>
       )

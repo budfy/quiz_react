@@ -1,4 +1,4 @@
-@import '../../sass/vars';
+@import '../../styles/vars';
 
 .resume {
   padding: 10px 0 50px;
@@ -70,9 +70,32 @@
 
   &__img {
     position: relative;
-    display: block;
+    display: flex;
+    justify-content: space-between;
     width: 100%;
     text-align: center;
+    max-width: 250px;
+    margin: 0 auto;
+
+    img {
+      margin: 0 auto;
+    }
+  }
+
+  &__img-item {
+    display: block;
+    opacity: 0.34;
+
+    &.--current {
+      opacity: 1;
+    }
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
+      object-position: center;
+    }
   }
 
   &__amount {

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import './Footer.scss'
 import Payment from './../Payment/Payment';
+import config from '../../config/config.json'
 
 function Footer() {
   const footerContent = useRef();
@@ -42,41 +43,41 @@ function Footer() {
             <div className="footer__block">
               <ul className="footer__list">
                 <li className="footer__item">
-                  <span className="footer__link">2022 ООО «Название»</span>
+                  <span className="footer__link">ИП Бондарь М.А.</span>
                 </li>
                 <li className="footer__item">
-                  <span className="footer__link">ИНН: 777777777</span>
+                  <span className="footer__link">ИНН: 310208225142</span>
                 </li>
                 <li className="footer__item">
-                  <span className="footer__link">ОГРН: 12112121212</span>
+                  <span className="footer__link">ОГРНИП: 321312300035189</span>
                 </li>
+                {/*<li className="footer__item">*/}
+                {/*  <span className="footer__link">Тел.: <a href="tel:+381111111101">+38 (111) 111-11-01</a></span>*/}
+                {/*</li>*/}
                 <li className="footer__item">
-                  <span className="footer__link">Тел.: <a href="tel:+381111111101">+38 (111) 111-11-01</a></span>
-                </li>
-                <li className="footer__item">
-                  <span className="footer__link">E-mail: <a href="mailto:support@support.com">support@support.com</a></span>
+                  <span className="footer__link">E-mail: <a href="mailto:support@support.com">support@ballance.pro</a></span>
                 </li>
               </ul>
             </div>
             <div className="footer__block">
-              <Payment subclassName={""} />
+              <Payment subclass={""} />
             </div>
             <div className="footer__block">
               <ul className="footer__list">
                 <li className="footer__item">
-                  <a href="#" className="footer__link">Политика конфиденциальности</a>
+                  <a href={`${config.FOOTER_LINKS.privacy}`} className="footer__link">Политика конфиденциальности</a>
                 </li>
                 <li className="footer__item">
                   <Link to="unsubscribe" className="footer__link" onClick={open}>Отменить подписку</Link>
                 </li>
                 <li className="footer__item">
-                  <a href="#" className="footer__link">Политика обработки данных</a>
+                  <a href={`${config.FOOTER_LINKS.data}`} className="footer__link">Политика обработки данных</a>
                 </li>
                 <li className="footer__item">
-                  <a href="#" className="footer__link">Тарифы</a>
+                  <a href={`${config.FOOTER_LINKS.user}`} className="footer__link">Пользовательское соглашение</a>
                 </li>
                 <li className="footer__item">
-                  <a href="#" className="footer__link">Возврат средств</a>
+                  <a href={`${config.FOOTER_LINKS.tarifes}`} className="footer__link">Тарифы</a>
                 </li>
               </ul>
             </div>

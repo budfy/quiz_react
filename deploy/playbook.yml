@@ -1,0 +1,15 @@
+---
+- name: deploy to production
+  hosts: ballance_frontend
+
+  tasks:
+    - name: Copy docker-compose.yml
+      copy:
+        src: ../docker-compose.yml
+        dest: /root/ballance_frontend/docker-compose.yml
+
+    - name: Pull new image
+      shell: docker compose -f /root/ballance_frontend/docker-compose.yml pull  ballance_frontend
+
+    - name: Redeploy
+      shell: docker compose -f /root/ballance_frontend/docker-compose.yml up -d

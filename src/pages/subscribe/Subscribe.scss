@@ -1,4 +1,4 @@
-@import "../../sass/_vars";
+@import "../../styles/_vars";
 
 .c-info {
   display: flex;
@@ -23,6 +23,18 @@
     font-size: 12px;
     font-weight: normal;
     color: $primary-color;
+  }
+
+  &__error {
+    display: block;
+    text-align: center;
+    font-weight: 700;
+    color: #EA2121;
+    margin: 0.5rem 0;
+
+    &.--200 {
+      color: $accent-color;
+    }
   }
 }
 

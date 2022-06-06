@@ -1,0 +1,19 @@
+{
+  "SERVER": {
+    "url": "https://api.ballance.pro"
+  },
+  "REQUEST_HEADERS": {
+    "accept": "application/json",
+    "Content-Type": "application/json"
+  },
+  "FOOTER_LINKS": {
+    "privacy": "/pdf/privacy_policy.pdf",
+    "data": "/pdf/data_policy.pdf",
+    "user": "/pdf/user_agreement.pdf",
+    "tarifes": "/pdf/tarifes.pdf"
+  },
+  "RULES_LINKS": {
+    "policy": "/policy",
+    "oferta": "/oferta"
+  }
+}

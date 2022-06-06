@@ -1425,11 +1425,6 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@juggle/resize-observer@^3.3.1":
-  version "3.3.1"
-  resolved "https://registry.npmjs.org/@juggle/resize-observer/-/resize-observer-3.3.1.tgz"
-  integrity sha512-zMM9Ds+SawiUkakS7y94Ymqx+S0ORzpG3frZirN3l+UlXUmSUR7hF4wxCVqW+ei94JzV5kt0uXBcoOEAuiydrw==
-
 "@leichtgewicht/ip-codec@^2.0.1":
   version "2.0.3"
   resolved "https://registry.npmjs.org/@leichtgewicht/ip-codec/-/ip-codec-2.0.3.tgz"
@@ -2852,11 +2847,6 @@ camelcase@^6.2.0, camelcase@^6.2.1:
   resolved "https://registry.npmjs.org/camelcase/-/camelcase-6.3.0.tgz"
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
-can-use-dom@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.npmjs.org/can-use-dom/-/can-use-dom-0.1.0.tgz"
-  integrity sha1-IsxKNKCrxDlQ9CxkEQJKP2NmtFo=
-
 caniuse-api@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/caniuse-api/-/caniuse-api-3.0.0.tgz"
@@ -3135,7 +3125,7 @@ core-js-pure@^3.20.2, core-js-pure@^3.8.1:
   resolved "https://registry.npmjs.org/core-js-pure/-/core-js-pure-3.22.4.tgz"
   integrity sha512-4iF+QZkpzIz0prAFuepmxwJ2h5t4agvE8WPYqs2mjLJMNNwJOnpch76w2Q7bUfCPEv/V7wpvOfog0w273M+ZSw==
 
-core-js@^3.0.1, core-js@^3.19.2:
+core-js@^3.19.2:
   version "3.22.4"
   resolved "https://registry.npmjs.org/core-js/-/core-js-3.22.4.tgz"
   integrity sha512-1uLykR+iOfYja+6Jn/57743gc9n73EWiOnSJJ4ba3B4fOEYDBv25MagmEZBxTp5cWq4b/KPx/l77zgsp28ju4w==
@@ -3593,13 +3583,6 @@ dom-serializer@^1.0.1:
     domelementtype "^2.0.1"
     domhandler "^4.2.0"
     entities "^2.0.0"
-
-dom7@^4.0.4:
-  version "4.0.4"
-  resolved "https://registry.npmjs.org/dom7/-/dom7-4.0.4.tgz"
-  integrity sha512-DSSgBzQ4rJWQp1u6o+3FVwMNnT5bzQbMb+o31TjYYeRi05uAcpF8koxdfzeoe5ElzPmua7W7N28YJhF7iEKqIw==
-  dependencies:
-    ssr-window "^4.0.0"
 
 domelementtype@1:
   version "1.3.1"
@@ -4411,7 +4394,7 @@ fs.realpath@^1.0.0:
 
 fsevents@^2.3.2, fsevents@~2.3.2:
   version "2.3.2"
-  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.2.tgz#8a526f78b8fdf4623b709e0b975c52c24c02fd1a"
+  resolved "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
   integrity sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==
 
 function-bind@^1.1.1:
@@ -4577,11 +4560,6 @@ gzip-size@^6.0.0:
   integrity sha512-ax7ZYomf6jqPTQ4+XCpUGyXKHk5WweS+e05MBO4/y3WJ5RkmPXNKvX+bx1behVILVwr6JSQvZAku021CHPXG3Q==
   dependencies:
     duplexer "^0.1.2"
-
-hammerjs@^2.0.8:
-  version "2.0.8"
-  resolved "https://registry.npmjs.org/hammerjs/-/hammerjs-2.0.8.tgz"
-  integrity sha1-BO93hiz/K7edMPdpIJWTAiK/YPE=
 
 handle-thing@^2.0.0:
   version "2.0.1"
@@ -5868,11 +5846,6 @@ lodash.sortby@^4.7.0:
   resolved "https://registry.npmjs.org/lodash.sortby/-/lodash.sortby-4.7.0.tgz"
   integrity sha1-7dFMgk4sycHgsKG0K7UhBRakJDg=
 
-lodash.throttle@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.npmjs.org/lodash.throttle/-/lodash.throttle-4.1.1.tgz"
-  integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
-
 lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.npmjs.org/lodash.uniq/-/lodash.uniq-4.5.0.tgz"
@@ -6132,11 +6105,6 @@ normalize-url@^6.0.1:
   version "6.1.0"
   resolved "https://registry.npmjs.org/normalize-url/-/normalize-url-6.1.0.tgz"
   integrity sha512-DlL+XwOy3NxAQ8xuC0okPgK46iuVNAK01YN7RueYBqqFeGsBjV9XmCAzAdgt+667bCl5kPh9EqKKDwnaPG1I7A==
-
-nouislider@^15.6.0:
-  version "15.6.0"
-  resolved "https://registry.npmjs.org/nouislider/-/nouislider-15.6.0.tgz"
-  integrity sha512-YJg+A6RQXTuFqhEwd42FeRaEGMGgDSSNnpIyVtT8XJrNl4VBEUkPI6Yj91bT3JjJIvNYi4VdppWeCV+z2gOnnw==
 
 npm-run-path@^4.0.1:
   version "4.0.1"
@@ -7789,18 +7757,6 @@ signal-exit@^3.0.2, signal-exit@^3.0.3:
   resolved "https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.7.tgz"
   integrity sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==
 
-simplebar@^5.3.6:
-  version "5.3.6"
-  resolved "https://registry.npmjs.org/simplebar/-/simplebar-5.3.6.tgz"
-  integrity sha512-FJUMbV+hNDd/m+1/fvD41TXKd5mSdlI5zgBygkaQIV3SffNbcLhSbJT6ufTs8ZNRLJ6i+qc/KCFMqWmvlGWMhA==
-  dependencies:
-    "@juggle/resize-observer" "^3.3.1"
-    can-use-dom "^0.1.0"
-    core-js "^3.0.1"
-    lodash.debounce "^4.0.8"
-    lodash.memoize "^4.1.2"
-    lodash.throttle "^4.1.1"
-
 sisteransi@^1.0.5:
   version "1.0.5"
   resolved "https://registry.npmjs.org/sisteransi/-/sisteransi-1.0.5.tgz"
@@ -7815,11 +7771,6 @@ slash@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/slash/-/slash-4.0.0.tgz"
   integrity sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==
-
-slim-select@^1.27.1:
-  version "1.27.1"
-  resolved "https://registry.npmjs.org/slim-select/-/slim-select-1.27.1.tgz"
-  integrity sha512-LvJ02cKKk6/jSHIcQv7dZwkQSXHLCVQR3v3lo8RJUssUUcmKPkpBmTpQ8au8KSMkxwca9+yeg+dO0iHAaVr5Aw==
 
 sockjs@^0.3.21:
   version "0.3.24"
@@ -7914,11 +7865,6 @@ sprintf-js@~1.0.2:
   version "1.0.3"
   resolved "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.0.3.tgz"
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
-
-ssr-window@^4.0.0, ssr-window@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.npmjs.org/ssr-window/-/ssr-window-4.0.2.tgz"
-  integrity sha512-ISv/Ch+ig7SOtw7G2+qkwfVASzazUnvlDTwypdLoPoySv+6MqlOV10VwPSE6EWkGjhW50lUmghPmpYZXMu/+AQ==
 
 stable@^0.1.8:
   version "0.1.8"
@@ -8168,14 +8114,6 @@ svgo@^2.7.0:
     csso "^4.2.0"
     picocolors "^1.0.0"
     stable "^0.1.8"
-
-swiper@^8.1.4:
-  version "8.1.4"
-  resolved "https://registry.npmjs.org/swiper/-/swiper-8.1.4.tgz"
-  integrity sha512-ho6ceKxqbDxV51qymVxwn1oB4CqTrsG3Y5pGW2aKlZxsT6NMdlow8ICUa+wD/m5l2T5ZD2B0yyqTihSSmLBV4A==
-  dependencies:
-    dom7 "^4.0.4"
-    ssr-window "^4.0.2"
 
 symbol-tree@^3.2.4:
   version "3.2.4"
@@ -8538,7 +8476,7 @@ v8-to-istanbul@^8.1.0:
 
 validator@^13.7.0:
   version "13.7.0"
-  resolved "https://registry.yarnpkg.com/validator/-/validator-13.7.0.tgz#4f9658ba13ba8f3d82ee881d3516489ea85c0857"
+  resolved "https://registry.npmjs.org/validator/-/validator-13.7.0.tgz"
   integrity sha512-nYXQLCBkpJ8X6ltALua9dRrZDHVYxjJ1wgskNt1lH9fzGjs3tgojGSCBjmEPwkWS1y29+DrizMTW19Pr9uB2nw==
 
 vary@~1.1.2:

@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import './Choicebox.scss'
 
 function Choicebox(props) {

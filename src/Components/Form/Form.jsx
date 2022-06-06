@@ -2,85 +2,68 @@ import React, { useState, useEffect } from "react";
 import SubmitBtn from "../SubmitBtn/SubmitBtn";
 import Email from "../Email/Email";
 import "./Form.scss";
+import config from "./../../config/config.json";
 
 function Form(props) {
   const [formEmail, setFormEmail] = useState(false);
-  const [formCheckbox, setFormCheckbox] = useState(false);
+  const [formCheckbox, setFormCheckbox] = useState({
+    "poll-form-rules": false,
+    "poll-form-autopay": false
+  });
   const [email, setEmail] = useState("");
+  const [paymentData, setPaymentData] = useState({});
+  const [btnStatus, setBtnStatus] = useState(false);
+  let cloudPay;
 
-  function submit(e) {
-    e.preventDefault();
-    setUserEmail();
-    payment();
+  async function setUserEmail() {
+    let userData = props.userData;
+    userData.email = email;
+    props.setUserData(userData);
+    await
+      props.sendData("payment", { "email": props.userData.email }, "set-email");
+  }
+
+  async function getPaymentData() {
+    console.log("GPD");
+    return fetch(`${config.SERVER.url}/payment/${props.userData.id}/pay`, {
+      method: "GET",
+      headers: config.REQUEST_HEADERS
+    })
+      .then(response => {
+        if (response.ok) {
+          let answer = response.json()
+          return answer;
+        }
+      }
+      )
+      .then(
+        answer => {
+          console.log("GPD answer: ", answer);
+          console.log(paymentData);
+          setPaymentData(answer.cloudpayments)
+          cloudPay = answer.cloudpayments;
+          console.log(cloudPay);
+        }
+      )
+      .catch(err => {
+        console.warn("Error in sendData:");
+        console.error(err);
+        return null;
+      }
+      )
   }
 
   function payment() {
+    console.log("P");
     let cp = window.cp;
-    let options = {
-      publicId: 'pk_a60581fd2eaa8838a56351191174',
-      description: 'За стройность',
-      amount: props.userData.price,
-      accountId: props.userData.email, //идентификатор плательщика (необязательно)
-      invoiceId: props.userData.id, //номер заказа  (необязательно)
-      email: props.userData.email, //email плательщика (необязательно)
-      skin: "mini", //дизайн виджета (необязательно)
-    };
 
     var widget = new cp.CloudPayments();
-    var receipt = {
-      Items: [//товарные позиции
-        {
-          label: props.userData.name, //наименование товара
-          price: props.userData.price, //цена
-          quantity: 1.00, //количество
-          amount: props.userData.price, //сумма
-          vat: 20, //ставка НДС
-          method: 0, // тег-1214 признак способа расчета - признак способа расчета
-          object: 0, // тег-1212 признак предмета расчета - признак предмета товара, работы, услуги, платежа, выплаты, иного предмета расчета
-        }
-      ],
-      taxationSystem: 0, //система налогообложения; необязательный, если у вас одна система налогообложения
-      email: props.userData.email, //e-mail покупателя, если нужно отправить письмо с чеком
-      phone: '', //телефон покупателя в любом формате, если нужно отправить сообщение со ссылкой на чек
-      isBso: false, //чек является бланком строгой отчетности
-      amounts:
-      {
-        electronic: props.userData.price, // Сумма оплаты электронными деньгами
-        advancePayment: 0.00, // Сумма из предоплаты (зачетом аванса) (2 знака после запятой)
-        credit: 0.00, // Сумма постоплатой(в кредит) (2 знака после запятой)
-        provision: 0.00 // Сумма оплаты встречным предоставлением (сертификаты, др. мат.ценности) (2 знака после запятой)
-      }
-    };
 
-    var data = {};
-    data.CloudPayments = {
-      CustomerReceipt: receipt, //чек для первого платежа
-      recurrent: {
-        interval: 'Month',
-        period: 1,
-        customerReceipt: receipt //чек для регулярных платежей
-      }
-    }; //создание ежемесячной подписки
-
-    widget.charge({ // options
-      // publicId: 'test_api_00000000000000000000001',
-      publicId: 'pk_a60581fd2eaa8838a563551191174', //id из личного кабинета
-      description: props.userData.subDescr, //назначение
-      amount: props.userData.price, //сумма
-      currency: 'RUB', //валюта
-      invoiceId: props.userData.id, //номер заказа  (необязательно)
-      accountId: props.userData.email, //идентификатор плательщика (обязательно для создания подписки)
-      skin: "modern",
-      data: data
-    },
+    widget.charge(cloudPay,
       function (options) {
-        props.sendData("payment", {
-          status: "paid"
-        },
-          "set-status");
         setTimeout(() => {
           nextStep()
-        }, 1500);
+        }, 500);
       },
       function (reason, options) {
         console.warn("Fail!");
@@ -94,25 +77,52 @@ function Form(props) {
     props.setStep(step + 1)
   }
 
-  function setUserEmail() {
-    let userData = props.userData;
-    userData.email = email;
-    props.setUserData(userData);
-    props.sendData("payment", { "email": props.userData.email }, "set-email")
+  function submit(e) {
+    e.preventDefault();
+    setUserEmail()
+      .then(() => {
+        getPaymentData()
+          .then(
+            payment
+          )
+      }
+      )
+  }
+
+  function checkboxesValidation(e) {
+    let obj = Object.seal(formCheckbox);
+    obj[e.target.id] = e.target.checked;
+    setFormCheckbox(obj);
+    for (const key in formCheckbox) {
+      if (!formCheckbox[key]) {
+        setBtnStatus(false);
+        break;
+      }
+      setBtnStatus(true);
+    }
   }
 
   return (
     <form className="poll-form" onSubmit={submit}>
       <Email setFormEmail={setFormEmail} setEmail={setEmail} />
-      <SubmitBtn formEmail={formEmail} formCheckbox={formCheckbox} />
-      <label htmlFor="poll-form" className="circle-checkbox poll-form__checkbox">
-        <input type="checkbox" id="poll-form" className="circle-checkbox__input" onChange={(e) => setFormCheckbox(e.target.checked)} />
+      <SubmitBtn formEmail={formEmail} btnStatus={btnStatus} />
+
+      {/*<label htmlFor="poll-form-data" className="circle-checkbox poll-form__checkbox">*/}
+      {/*  <input type="checkbox" id="poll-form-data" className="circle-checkbox__input" onChange={checkboxesValidation} />*/}
+      {/*  <span className="circle-checkbox__icon"></span>*/}
+      {/*  <span className="circle-checkbox__label">Нажимая кнопку "Оплатить" Вы даете согласие на обработку персональных данных, а также подтверждаете ознакомление с публичной офертойи тарифами</span>*/}
+      {/*</label>*/}
+
+      <label htmlFor="poll-form-rules" className="circle-checkbox poll-form__checkbox">
+        <input type="checkbox" id="poll-form-rules" className="circle-checkbox__input" onChange={checkboxesValidation} />
         <span className="circle-checkbox__icon"></span>
-        <span className="circle-checkbox__label">Нажимая кнопку "Оплатить" Вы даете согласие на обработку персональных данных, а также подтверждаете ознакомление с публичной офертойи тарифами</span>
-        <picture>
-          <source media="(min-width: )" srcSet="" />
-          <img src="" alt="" />
-        </picture>
+        <span className="circle-checkbox__label">Согласен с <a href={config.RULES_LINKS.policy} target="_blank">политикой обработки персональных данных, правилами предоставления услуг</a> по подписке, <a href={config.RULES_LINKS.oferta} target="_blank">офертой рекуррентных платежей, договором-офертой и условиями использования</a>. Пожалуйста, ознакомьтесь с действующим тарифным планом сервиса по разработке индивидуального курса диеты. Стоимость услуги составляет {props.price} рублей (разовый платёж) за получение начального плана питания. В дальнейшем через сутки после получения начального плана питания за каждую неделю использования взимается комиссия сервиса в размере {props.oldPrice} рублей</span>
+      </label>
+
+      <label htmlFor="poll-form-autopay" className="circle-checkbox poll-form__checkbox">
+        <input type="checkbox" id="poll-form-autopay" className="circle-checkbox__input" onChange={checkboxesValidation} />
+        <span className="circle-checkbox__icon"></span>
+        <span className="circle-checkbox__label">Я согласен подключить АВТОМАТИЧЕСКИЕ платежи подписки которые будут списываться у меня с карты без моего дальнейшего участия! Сумма списаний согласно тарифам!</span>
       </label>
     </form>
   )

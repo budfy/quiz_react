@@ -12,11 +12,11 @@ function Timer(props) {
     let seconds = parseInt(sec);
 
     setTimeout(() => {
-      if (minutes > 0 && seconds == 0) {
+      if (minutes > 0 && seconds === 0) {
         seconds = 59;
         minutes -= 1;
       }
-      if (minutes == 0 && seconds == 0) {
+      if (minutes === 0 && seconds === 0) {
         setMessage(", к сожалению, истёк.")
         return false;
       }
